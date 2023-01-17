@@ -9,6 +9,7 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({extended: true}));
 
+mongoose.set('strictQuery', true);
 mongoose.connect(process.env.MONGOLAB_URI, {useNewUrlParser: true});
 
 app.get("/",(req,res)=>{
