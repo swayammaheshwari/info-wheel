@@ -1,0 +1,50 @@
+{
+	// Place your global snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	"Print to console": {
+		"scope": "javascript,typescript",
+		"prefix": "log",
+		"body": [
+			"console.log('$1');",
+			"$2"
+		],
+		"description": "Log output to console"
+	},
+
+	"boilerplate for node": {
+		"scope": "javascript,typescript",
+		"prefix": "node-boilerplate",
+		"body": [
+			"require('dotenv').config();",
+			"const express = require('express');",
+			"const ejs = require('ejs');",
+			"const mongoose = require('mongoose');",
+			"",
+			"const app = express();",
+			"app.set('view engine', 'ejs');",
+			"app.use(express.json());",
+			"app.use(express.static('public'));",
+			"app.use(express.urlencoded({extended: true}));",
+			"",
+			"mongoose.set('strictQuery', true);",
+			"mongoose.connect(process.env.MONGOLAB_URI, {useNewUrlParser: true});",
+			"",
+			"app.get(\"/\",(req,res)=>{",
+    		"res.send(\"Hello World\")",
+			"})",
+			"",
+			"app.listen(process.env.PORT, function() {",
+				"console.log(`Server started on http://localhost:${process.env.PORT}`);",
+			"});",
+			"",
+			"//PORT=5000",
+			"//MONGOLAB_URI=mongodb://localhost/"
+		],
+		"description": "Log output to console"
+	}
+}
