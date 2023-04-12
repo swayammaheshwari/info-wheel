@@ -13,7 +13,7 @@ mongoose.set('strictQuery', true);
 mongoose.connect(process.env.MONGOLAB_URI, {useNewUrlParser: true});
 
 app.get("/",(req,res)=>{
-    res.send("Hello World")
+    res.render("index")
 })
 
 app.listen(process.env.PORT, function() {
@@ -21,6 +21,7 @@ app.listen(process.env.PORT, function() {
 });
 
 
-
-//PORT=5000
-//MONGOLAB_URI=mongodb://localhost/
+/*
+PORT=5000
+MONGOLAB_URI=mongodb://127.0.0.1/
+*/
