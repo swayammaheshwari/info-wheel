@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords"
+        content="tailwind,tailwindcss,tailwind css,css,starter template,free template,admin templates, admin template, admin dashboard, free tailwind templates, tailwind example">
+    <!-- Css -->
+    <link rel="stylesheet" href="./dist/styles.css">
+    <link rel="stylesheet" href="./dist/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700,700i" rel="stylesheet">
+    <title>Dashboard | Info Wheel</title>
+</head>
+
+<body>
+
+    <!--Container -->
+    <div class="mx-auto bg-grey-400">
+        <!--Screen-->
+        <div class="min-h-screen flex flex-col">
+            <!--Header Section Starts Here-->
+            <header class="bg-nav">
+                <div class="flex justify-between">
+                    <div class="p-1 mx-3 inline-flex items-center">
+                        <i class="fas fa-bars pr-2 text-white" onclick="sidebarToggle()"></i>
+                        <h1 class="text-white p-2">Logo</h1>
+                    </div>
+                    <div class="p-1 flex flex-row items-center">
+                        <a href="https://github.com/tailwindadmin/admin"
+                            class="text-white p-2 mr-2 no-underline hidden md:block lg:block">User</a>
+
+
+                        <img onclick="profileToggle()" class="inline-block h-8 w-8 rounded-full"
+                            src="https://avatars0.githubusercontent.com/u/4323180?s=460&v=4" alt="">
+                        <a href="#" onclick="profileToggle()"
+                            class="text-white p-2 no-underline hidden md:block lg:block">Swayam Maheshwari</a>
+                        <div id="ProfileDropDown"
+                            class="rounded hidden shadow-md bg-white absolute pin-t mt-12 mr-1 pin-r">
+                            <ul class="list-reset">
+                                <li><a href="#" class="no-underline px-4 py-2 block text-black hover:bg-grey-light">My
+                                        account</a></li>
+                                <li><a href="#"
+                                        class="no-underline px-4 py-2 block text-black hover:bg-grey-light">Notifications</a>
+                                </li>
+                                <li>
+                                    <hr class="border-t mx-2 border-grey-ligght">
+                                </li>
+                                <li><a href="#"
+                                        class="no-underline px-4 py-2 block text-black hover:bg-grey-light">Logout</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!--/Header-->
+
+            <div class="flex flex-1">
+                <!--Sidebar-->
+                <aside id="sidebar"
+                    class="bg-side-nav w-1/2 md:w-1/6 lg:w-1/6 border-r border-side-nav hidden md:block lg:block">
+
+                    <ul class="list-reset flex flex-col">
+                        <li class=" w-full h-full py-3 px-2 border-b border-light-border bg-white">
+                            <a href="/dashboard"
+                                class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                                <i class="fas fa-tachometer-alt float-left mx-2"></i>
+                                Dashboard
+                                <span><i class="fas fa-angle-right float-right"></i></span>
+                            </a>
+                        </li>
+                        <li class=" w-full h-full py-3 px-2 border-b border-light-border bg-white">
+                            <a href="/dashboard/update"
+                                class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                                <i class="fas fa-tachometer-alt float-left mx-2"></i>
+                                Update Blogs
+                                <span><i class="fas fa-angle-right float-right"></i></span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </aside>
+                <!--/Sidebar-->
+                <!--Main-->
+                <main class="bg-white-300 flex-1 p-3 overflow-hidden">
+                    <div class="flex flex-col">
+                        <!-- Stats Row Starts Here -->
+                        <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2">
+                            <div
+                                class="shadow bg-info border-l-8 hover:bg-info-dark border-info-dark mb-2 p-2 md:w-1/4 mx-2">
+                                <div class="p-4 flex flex-col">
+                                    <a href="#" class="no-underline text-white text-2xl">
+                                        4
+                                    </a>
+                                    <a href="#" class="no-underline text-white text-lg">
+                                        Total post
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
+                            <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
+                                <div class="bg-gray-200 px-2 py-3 border-solid border-gray-300 border-b">
+                                    Cards
+                                </div>
+                                <div class="p-1 flex flex-1 flex-col  justify-between md:mx-1 lg:mx-1">
+
+                                    <!-- horizontal card -->
+                                    <div class="">
+                                        <div class="h-40 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+                                            style="background-image: url('https://tailwindcss.com/img/card-left.jpg')"
+                                            title="Woman holding a mug">
+                                        </div>
+                                        <div
+                                            class="border-r border-b border-l border-gray-300 lg:border-l-0 lg:border-t lg:border-gray-300 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+                                            <div class="mb-2">
+                                                <p class="text-sm text-gray-700 flex items-center">
+                                                    <svg class="fill-current text-gray w-3 h-3 mr-2"
+                                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                        <path
+                                                            d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z" />
+                                                    </svg>
+                                                    Members only
+                                                </p>
+                                                <div class="text-black-500 font-bold text-lg mb-2">Can coffee make you a
+                                                    better developer?</div>
+                                                <p class="text-gray-700 text-base">Lorem ipsum dolor sit amet,
+                                                    consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et
+                                                    p.</p>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <img class="w-10 h-10 rounded-full mr-4"
+                                                    src="https://pbs.twimg.com/profile_images/885868801232961537/b1F6H4KC_400x400.jpg"
+                                                    alt="Avatar of Jonathan Reinink">
+                                                <div class="text-sm">
+                                                    <p class="text-black leading-none">Jonathan Reinink</p>
+                                                    <p class="text-gray-dark">Aug 18</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- /horizontal card -->
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </main>
+                <!--/Main-->
+            </div>
+            <!--Footer-->
+            <footer class="bg-grey-darkest text-white p-2">
+                <div class="flex flex-1 mx-auto">&copy; Design &</div>
+                <div class="flex flex-1 mx-auto">Distributed by: <a href="" target="_blank">Kurenai</a></div>
+            </footer>
+            <!--/footer-->
+
+        </div>
+
+    </div>
+    <script src="./main.js"></script>
+    <script>
+        // Get the Body input element
+        const bodyInput = document.querySelector('textarea[name="Body"]');
+
+        // Get the image input elements
+        const imageInput1 = document.getElementById('formFile2');
+        const imageInput2 = document.getElementById('formFile3');
+
+        // Add an event listener to the Body input
+        bodyInput.addEventListener('input', function () {
+            const wordCount = this.value.trim().split(/\s+/).length;
+            console.log(wordCount)
+            const imageInputs = [imageInput1, imageInput2];
+
+            if (wordCount >= 250) {
+                document.getElementById('image-inputs').classList.remove('hidden');
+            } else {
+                document.getElementById('image-inputs').classList.add('hidden');
+                document.getElementById('image-inputs-2').classList.add('hidden');
+            }
+
+            if (wordCount >= 500) {
+                document.getElementById('image-inputs-2').classList.remove('hidden');
+            } else {
+                document.getElementById('image-inputs-2').classList.add('hidden');
+            }
+        });
+
+    </script>
+</body>
+
+</html>

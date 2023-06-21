@@ -1,0 +1,138 @@
+<%- include("Components/Header") %>
+
+    <div class="site-cover site-cover-sm same-height overlay single-page"
+        style=" background-size: cover; background-position: center; height: 400px; width: 100%;" id="blogContainer">
+        <div class="container">
+            <div class="row same-height justify-content-center">
+                <div class="col-md-6">
+                    <div class="post-entry text-center">
+                        <h1 class="mb-4">
+                            <%= blog.title %>
+                        </h1>
+                        <div class="post-meta align-items-center text-center">
+                            <span>&nbsp;-&nbsp; <%=blog.date %></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="container">
+
+            <div class="row blog-entries element-animate">
+
+                <div class="">
+
+                    <div class="post-content-body">
+                        <div class="row my-4">
+                            <div class="col-md-6 mb-4">
+                                <div>
+                                    <% blogBody.body1.forEach((paragraph)=> { %>
+                                        <p>
+                                            <%= paragraph %>
+                                        </p>
+                                        <% }); %>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-5">
+                                <img src="<%= blog.bodyImage1 %>" alt="Image placeholder" class="img-fluid rounded">
+                            </div>
+                            <div class="col-md-6 mb-5">
+                                <img src="<%= blog.bodyImage2 %>" alt="Image placeholder" class="img-fluid rounded">
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div>
+                                    <% blogBody.body1.forEach((paragraph)=> { %>
+                                        <p>
+                                            <%= paragraph %>
+                                        </p>
+                                        <% }); %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-5">
+                        <p>Category <a href="/category/<%=blog.category%>">
+                                <%=blog.category%>
+                            </a>
+                    </div>
+                </div>
+
+                <!-- END main-content -->
+
+            </div>
+            <!-- END sidebar -->
+        </div>
+    </section>
+
+
+    <!-- Start posts-entry -->
+    <section class="section posts-entry posts-entry-sm bg-light">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-12 text-uppercase text-black">More Blog Posts</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-3">
+                    <div class="blog-entry">
+                        <a href="single.html" class="img-link">
+                            <img src="/images/img_1_horizontal.jpg" alt="Image" class="img-fluid">
+                        </a>
+                        <span class="date">Apr. 14th, 2022</span>
+                        <h2><a href="single.html">Thought you loved Python? Wait until you meet Rust</a></h2>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        <p><a href="#" class="read-more">Continue Reading</a></p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="blog-entry">
+                        <a href="single.html" class="img-link">
+                            <img src="/images/img_2_horizontal.jpg" alt="Image" class="img-fluid">
+                        </a>
+                        <span class="date">Apr. 14th, 2022</span>
+                        <h2><a href="single.html">Startup vs corporate: What job suits you best?</a></h2>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        <p><a href="#" class="read-more">Continue Reading</a></p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="blog-entry">
+                        <a href="single.html" class="img-link">
+                            <img src="/images/img_3_horizontal.jpg" alt="Image" class="img-fluid">
+                        </a>
+                        <span class="date">Apr. 14th, 2022</span>
+                        <h2><a href="single.html">UK sees highest inflation in 30 years</a></h2>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        <p><a href="#" class="read-more">Continue Reading</a></p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="blog-entry">
+                        <a href="single.html" class="img-link">
+                            <img src="/images/img_4_horizontal.jpg" alt="Image" class="img-fluid">
+                        </a>
+                        <span class="date">Apr. 14th, 2022</span>
+                        <h2><a href="single.html">Don’t assume your user data in the cloud is safe</a></h2>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        <p><a href="#" class="read-more">Continue Reading</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End posts-entry -->
+
+    <script>
+        // Get the blog title image URL from the server-side data
+        const blogTitleImage = '<%= blog.titleImage.replace(/\\/g, "/") %>';
+
+        // Set the background image dynamically using JavaScript
+        const blogContainer = document.getElementById('blogContainer');
+        console.log(blogContainer)
+        blogContainer.style.backgroundImage = `url('${blogTitleImage}')`;
+    </script>
+
+    <%- include("Components/Footer") %>
