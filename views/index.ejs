@@ -1,18 +1,37 @@
 <%- include("Components/Header") %>
+
+    <style>
+        .img-wrapper {
+            width: 400px;
+            /* Adjust this value as per your requirements */
+            height: 300px;
+            /* Adjust this value as per your requirements */
+            overflow: hidden;
+        }
+
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
     <!-- Start retroy layout blog posts -->
-    <section class="section bg-light">
-        <div class="container">
-            <p style="text-align: center; font-size: large; color: black;">Welcome to The Info Wheels,
-                where technology,
-                lifestyle,
-                food, and home improvement converge. Get ready
-                to dive into a world of captivating blogs that cater to your tech-savvy side, tantalise your taste
-                buds,
-                inspire your personal style, and transform your living space. Join us on this extraordinary journey
-                as
-                we redefine modern living, one blog post at a time. Welcome to our vibrant community!</p>
+    <section class="section bg-light" style="padding-top: 1rem;">
+        <div class="container d-flex">
+            <img src="/images/info-wheel-logo2.png" alt="" height="140px"
+                style="margin-bottom: 15px; padding-left: 0px;">
+
+
+            <div style="display: flex; align-items: end; margin: 0 0 4px 15px;">
+                <h6 style="margin-inline: 20px; font-weight: 600; "><a href="/#technology">Technology</a></h6>
+                <h6 style="margin-inline: 20px; font-weight: 600; "><a href="/#lifestyle">Lifestyle</a></h6>
+                <h6 style="margin-inline: 20px; font-weight: 600; "><a href="/#food">Food</a></h6>
+                <h6 style="margin-inline: 20px; font-weight: 600; "><a href="/#improvement">Home Improvement</a></h6>
+            </div>
+
         </div>
         <div class="container">
+            <hr style="width: 100%; margin: 0 0 30px 0; height: 4px; color: #1D6FB7; opacity: 1;">
             <div class="row align-items-stretch retro-layout">
                 <div class="col-md-4">
                     <a href="single.html" class="h-entry mb-30 v-height gradient">
@@ -75,14 +94,14 @@
     <!-- End retroy layout blog posts -->
 
     <!-- Start posts-entry -->
-    <section id="culture" class="section posts-entry">
+    <section id="technology" class="section posts-entry">
         <div class="container">
             <div class="row mb-4">
                 <div class="col-sm-9">
                     <h2 class="posts-entry-title">technology</h2>
 
                 </div>
-                <div class="col-sm-3 text-sm-end"><a href="/category/technology" class="read-more">View All</a></div>
+                <div class="col-sm-3 text-sm-end"><a href="/category/Technology" class="read-more">View All</a></div>
             </div>
             <div class="row g-3">
                 <p style="font-size: large; color: black;">Embrace the future with our tech-focused blog, where we
@@ -95,7 +114,9 @@
                             <div class="col-md-4">
                                 <div class="blog-entry">
                                     <a href="/blog/<%= blog._id %>" class="img-link">
-                                        <img src="<%= blog.titleImage %>" alt="Image" class="img-fluid">
+                                        <div class="img-wrapper">
+                                            <img src="<%= blog.titleImage %>" alt="Image" class="img-fluid custom-img">
+                                        </div>
                                     </a>
                                     <span class="date">
                                         <%= blog.date %>
@@ -105,7 +126,7 @@
                                         </a>
                                     </h2>
                                     <p>
-                                        <%= blog.body.substring(0,50) + "..." %>
+                                        <%- blog.body.substring(0,50) + "..." %>
                                     </p>
                                     <p><a href="/blog/<%= blog._id %>" class="btn btn-sm btn-outline-primary">Read
                                             More</a>
@@ -121,7 +142,7 @@
     <!-- End posts-entry -->
 
     <!-- Start posts-entry -->
-    <section id="Lifestyle" class="section posts-entry posts-entry-sm bg-light">
+    <section id="lifestyle" class="section posts-entry posts-entry-sm bg-light">
         <div class="container">
             <div class="row mb-4">
                 <div class="col-sm-6">
@@ -137,7 +158,9 @@
                     <div class="col-md-6 col-lg-3">
                         <div class="blog-entry">
                             <a href="/blog/<%= blog._id %>" class="img-link">
-                                <img src="images/img_1_horizontal.jpg" alt="Image" class="img-fluid">
+                                <div class="img-wrapper">
+                                    <img src="<%= blog.titleImage %>" alt="Image" class="img-fluid custom-img">
+                                </div>
                             </a>
                             <span class="date">
                                 <%= blog.date %>
@@ -146,7 +169,7 @@
                                     <%= blog.title %>
                                 </a></h2>
                             <p>
-                                <%=blog.body.substring(0,50) + "..." %>
+                                <%- blog.body.substring(0,50) + "..." %>
                             </p>
                             <p><a href="/blog/<%= blog._id %>" class="read-more">Continue Reading</a></p>
                         </div>
@@ -176,10 +199,12 @@
                 <% blogs.Food.forEach(blog=> { %>
                     <div class="col-lg-4 mb-4">
                         <div class="post-entry-alt">
-                            <a href="blog/<%= blog._id %>" class="img-link"><img src="images/img_7_horizontal.jpg"
-                                    alt="Image" class="img-fluid"></a>
+                            <a href="/blog/<%= blog._id %>" class="img-link">
+                                <div class="img-wrapper">
+                                    <img src="<%= blog.titleImage %>" alt="Image" class="img-fluid custom-img">
+                                </div>
+                            </a>
                             <div class="excerpt">
-
 
                                 <h2><a href="blog/<%= blog._id %>">
                                         <%= blog.title %>
@@ -193,7 +218,7 @@
                                 </div>
 
                                 <p>
-                                    <%=blog.body.substring(0,100) + "..." %>
+                                    <%- blog.body.substring(0,100) + "..." %>
                                 </p>
                                 <p><a href="blog/<%=blog._id%>" class="read-more">Continue Reading</a></p>
                             </div>
@@ -205,7 +230,7 @@
         </div>
     </section>
 
-    <section id="HomeImprovement" class="section posts-entry posts-entry-sm bg-light">
+    <section id="improvement" class="section posts-entry posts-entry-sm bg-light">
         <div class="container">
             <div class="row mb-4">
                 <div class="col-sm-6">
@@ -220,8 +245,10 @@
                 <% blogs["Home Improvement"].forEach(blog=> { %>
                     <div class="col-md-6 col-lg-3">
                         <div class="blog-entry">
-                            <a href="blog/<%=blog._id%>" class="img-link">
-                                <img src="images/img_1_horizontal.jpg" alt="Image" class="img-fluid">
+                            <a href="/blog/<%= blog._id %>" class="img-link">
+                                <div class="img-wrapper">
+                                    <img src="<%= blog.titleImage %>" alt="Image" class="img-fluid custom-img">
+                                </div>
                             </a>
                             <span class="date">
                                 <%= blog.date %>
@@ -230,7 +257,7 @@
                                     <%= blog.title %>
                                 </a></h2>
                             <p>
-                                <%=blog.body.substring(0,50) + "..." %>
+                                <%- blog.body.substring(0,50) + "..." %>
                             </p>
                             <p><a href="#" class="read-more">Continue Reading</a></p>
                         </div>

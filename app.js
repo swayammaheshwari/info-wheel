@@ -5,8 +5,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
-const shortid = require("shortid");
-const upload = require("./multerConfig");
+const { upload, jsonToHtml } = require("./Config");
 
 const app = express();
 app.set("view engine", "ejs");
@@ -23,13 +22,13 @@ const blogSchema = new mongoose.Schema({
   date: String,
   category: String,
   titleImage: String,
-  bodyImage1: String,
-  bodyImage2: String,
 });
 
-const uniqueId = shortid.generate();
-
 const Blog = mongoose.model("blog", blogSchema);
+
+app.get("/test", (req, res) => {
+  res.render("test");
+});
 
 app.get("/", (req, res) => {
   const categoryLimits = {
@@ -43,6 +42,11 @@ app.get("/", (req, res) => {
     if (err) {
       throw err;
     } else {
+      blogs.forEach((blog) => {
+        let t = JSON.parse(blog.body);
+        t = t.blocks[0].data.text;
+        blog.body = t;
+      });
       const renderedBlogs = {
         Technology: [],
         Lifestyle: [],
@@ -66,7 +70,50 @@ app.get("/", (req, res) => {
 });
 
 app.get("/update", (req, res) => {
-  res.render("Update");
+  Blog.find({}, (err, blogs) => {
+    if (err) {
+      throw err;
+    } else {
+      blogs.forEach((blog) => {
+        let t = JSON.parse(blog.body);
+        t = t.blocks[0].data.text;
+        blog.body = t;
+      });
+      res.render("Update", { blogs: blogs });
+    }
+  });
+});
+
+app.get("/update/:id", (req, res) => {
+  const _id = req.params.id;
+  Blog.findOne({ _id }, (err, blog) => {
+    if (err) {
+      throw err;
+    } else {
+      res.render("Form", { blog });
+    }
+  });
+});
+
+app.post("/updatepost", (req, res) => {
+  const id = req.body.id;
+
+  Blog.findOneAndUpdate(
+    { _id: id },
+    { $set: req.body }, // Assuming the updated data is sent in the request body
+    { new: true },
+    (err, blog) => {
+      if (err) {
+        throw err;
+      } else {
+        res.send({ blog });
+      }
+    }
+  );
+});
+
+app.get("/editor", (req, res) => {
+  res.render("editor");
 });
 
 app.get("/blog/:id", (req, res) => {
@@ -75,59 +122,40 @@ app.get("/blog/:id", (req, res) => {
     if (err) {
       throw err;
     } else {
-      // Split the blog body into paragraphs of approximately 60 words each
-      const words = blog.body.split(" ");
-      const totalWords = words.length;
+      // const t = JSON.parse(blog.body);
+      // blog.body = t;
+      // console.log(t.blocks[0].data.text);
+      // console.log(blog.body.blockst);
 
-      let body1, body2;
-
-      if (totalWords <= 250) {
-        body1 = wrapInParagraphs(words, 60);
-        body2 = "";
-      } else {
-        const halfWords = Math.floor(totalWords / 2);
-        const words1 = words.slice(0, halfWords);
-        const words2 = words.slice(halfWords);
-
-        body1 = wrapInParagraphs(words1, 60);
-        body2 = wrapInParagraphs(words2, 60);
+      console.log("before ", typeof blog.body);
+      try {
+        blog.body = JSON.parse(blog.body);
+        console.log("Parsing successful");
+      } catch (error) {
+        console.log("Parsing error:", error);
       }
+      // blog.body = JSON.parse(blog.body);
+      console.log("after ", typeof blog.body);
 
-      // Render the blog with the revised body structure
-      res.render("Blog", { blogBody: { body1, body2 }, blog });
+      blog.body = jsonToHtml(blog.body);
+      res.render("Blog", { blog });
     }
   });
 });
 
-// Function to wrap words in paragraphs of maxWordsPerParagraph
-function wrapInParagraphs(words, maxWordsPerParagraph) {
-  const paragraphs = [];
-  let currentParagraph = "";
-
-  for (let i = 0; i < words.length; i++) {
-    if (i > 0 && i % maxWordsPerParagraph === 0) {
-      paragraphs.push(currentParagraph);
-      currentParagraph = "";
-    }
-
-    currentParagraph += `${words[i]} `;
-  }
-
-  if (currentParagraph !== "") {
-    paragraphs.push(currentParagraph);
-  }
-
-  return paragraphs;
-}
-
 app.get("/category/:category", (req, res) => {
   let category = req.params.category;
 
-  Blog.find({ category: category }, (err, data) => {
+  Blog.find({ category: category }, (err, blogs) => {
     if (err) {
       throw err;
     } else {
-      res.render("Category", { category: category, blogs: data });
+      blogs.forEach((blog) => {
+        let t = JSON.parse(blog.body);
+        t = t.blocks[0].data.text;
+        blog.body = t;
+      });
+      res.render("Category", { category: category, blogs: blogs });
     }
   });
 });
@@ -154,86 +182,46 @@ app.get("/dashboard", (req, res) => {
   res.render("Dashboard");
 });
 
-app.post(
-  "/post",
-  upload.fields([
-    { name: "titleImage", maxCount: 1 },
-    { name: "bodyImage1", maxCount: 1 },
-    { name: "bodyImage2", maxCount: 1 },
-  ]),
-  (req, res) => {
-    try {
-      const blogId = shortid.generate(); // Generate a unique ID for the blog post
-
-      // Extract the file paths from req.files
-      const titleImage = req.files["titleImage"];
-      const bodyImage1 = req.files["bodyImage1"];
-      const bodyImage2 = req.files["bodyImage2"];
-
-      // Check if the title image exists in the request
-      if (!titleImage) {
-        throw new Error("Title image is missing.");
-      }
-
-      // Get the title image path and remove "public" directory from it
-      const titleImagePath = path.join(
-        titleImage[0].path.replace("public", "")
-      );
-
-      // Create a new blog post object
-      const blog = new Blog({
-        title: req.body.title,
-        body: req.body.Body,
-        category: req.body.category,
-        date: new Date().toLocaleDateString(),
-        titleImage: titleImagePath,
-      });
-
-      // Check if the body images exist and add their paths if available
-      if (bodyImage1) {
-        const bodyImage1Path = path.join(
-          bodyImage1[0].path.replace("public", "")
-        );
-        blog.bodyImage1 = bodyImage1Path;
-      }
-
-      if (bodyImage2) {
-        const bodyImage2Path = path.join(
-          bodyImage2[0].path.replace("public", "")
-        );
-        blog.bodyImage2 = bodyImage2Path;
-      }
-
-      // Save the blog post to the database
-      blog.save((err) => {
-        if (err) {
-          console.log(err);
-          res.status(500).send("Error saving the blog post.");
-        } else {
-          res.status(200).send("Blog post saved successfully.");
-        }
-      });
-    } catch (error) {
-      console.log(error);
-      res.status(400).send("Bad request.");
-    }
+app.post("/uploadEditor", upload.single("image"), (req, res) => {
+  if (!req.file) {
+    console.log("error");
+    res.status(400).send("No file uploaded");
+    return;
   }
-);
 
-// app.post("/post", (req, res) => {
-//   const blog = new Blog({
-//     title: req.body.title,
-//     body: req.body.Body,
-//     category: req.body.category,
-//     date: new Date().toLocaleDateString(),
-//   });
+  const imagePath = req.file.path;
+  const relativeImagePath = imagePath.replace("public", "");
 
-//   console.log(req.body);
+  res.json({
+    success: 1,
+    file: {
+      url: `http://localhost:5000/${relativeImagePath}`,
+      // ... and any additional fields you want to store, such as width, height, color, extension, etc
+    },
+  });
+});
 
-//   // blog.save();
-//   res.send("blog saved");
-//   // res.redirect("/");
-// });
+app.post("/post", upload.single("title-image"), (req, res) => {
+  if (!req.file) {
+    res.status(400).send("No file uploaded");
+    return;
+  }
+
+  const imagePath = req.file.path;
+  const titleImagePath = imagePath.replace("public", "");
+
+  const blog = new Blog({
+    title: req.body.title,
+    body: req.body.editorContent,
+    category: req.body.category,
+    date: new Date().toLocaleDateString(),
+    titleImage: titleImagePath,
+  });
+
+  blog.save();
+
+  res.send("Donee");
+});
 
 app.listen(process.env.PORT, function () {
   console.log(`Server started on http://localhost:${process.env.PORT}`);

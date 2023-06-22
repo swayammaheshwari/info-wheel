@@ -1,6 +1,7 @@
 /* Mobile View */
 @media only screen and (max-width: 767px) {
   .custom-container {
+    color: #181818;
     margin: 3rem auto !important;
     width: 100% !important;
     text-align: justify !important;
@@ -14,6 +15,7 @@
 /* Desktop View */
 @media only screen and (min-width: 1024px) {
   .custom-container {
+    color: #181818;
     margin: 3rem auto !important;
     width: 60% !important;
     text-align: justify !important;

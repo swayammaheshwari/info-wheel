@@ -8,8 +8,8 @@
     <meta name="keywords"
         content="tailwind,tailwindcss,tailwind css,css,starter template,free template,admin templates, admin template, admin dashboard, free tailwind templates, tailwind example">
     <!-- Css -->
-    <link rel="stylesheet" href="./dist/styles.css">
-    <link rel="stylesheet" href="./dist/all.css">
+    <link rel="stylesheet" href="/dist/styles.css">
+    <link rel="stylesheet" href="/dist/all.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700,700i" rel="stylesheet">
     <title>Dashboard | Info Wheel</title>
 </head>
@@ -108,11 +108,12 @@
                         <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
                             <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
                                 <div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
-                                    New post
+                                    Update post
                                 </div>
                                 <div class="p-3 bg-gray-200">
-                                    <form class="w-full" action="/post" method="post" enctype="multipart/form-data"
-                                        onsubmit="submitForm(event)">
+                                    <form class="w-full" action="/updatepost" method="post"
+                                        enctype="multipart/form-data" onsubmit="submitForm(event)">
+                                        <input type="hidden" value="<%=blog._id %>" name="id" id="">
                                         <div class="flex flex-wrap -mx-3 mb-6">
                                             <div class="w-full px-3">
                                                 <label
@@ -122,7 +123,8 @@
                                                 </label>
                                                 <input
                                                     class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey"
-                                                    id="grid-password" name="title" type="text" placeholder="Title">
+                                                    id="grid-password" name="title" type="text" placeholder="Title"
+                                                    value="<%= blog.title %>">
                                             </div>
                                         </div>
                                         <div class="mb-3">
@@ -131,7 +133,8 @@
                                                 Image</label>
                                             <input
                                                 class="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
-                                                type="file" id="formFile" name="title-image" />
+                                                type="file" id="formFile" name="title-image"
+                                                value="<%= blog.titleImage %>" />
                                         </div>
                                         <div class="flex flex-wrap -mx-3 mb-6">
                                             <div class="w-full px-3">
@@ -160,6 +163,7 @@
                                                         <option value="Food">Food</option>
                                                         <option value="Home Improvement">Home Improvement</option>
                                                     </select>
+
                                                     <div
                                                         class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-grey-darker">
                                                         <svg class="fill-current h-4 w-4"
@@ -184,7 +188,7 @@
                         </div>
                         <!--/Grid Form-->
 
-
+                        <div id="demo" style="display: none;"><%- blog.body %></div>
                         <!--/Profile Tabs-->
                     </div>
                 </main>
@@ -206,8 +210,74 @@
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/paragraph@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@latest"></script>
 
-    <script src="./main.js"></script>
-    <script src="./public.js"></script>
+    <script src="/main.js"></script>
+    <script>
+        let editor;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var data = document.getElementById("demo").innerHTML
+            var DEFAULT_INITIAL_DATA = JSON.parse(data)
+
+            editor = new EditorJS({
+                holder: "editorjs",
+                autofocus: true,
+                tools: {
+                    header: {
+                        class: Header,
+                        inlineToolbar: true,
+                    },
+                    list: {
+                        class: List,
+                        inlineToolbar: true,
+                    },
+                    image: {
+                        class: ImageTool,
+                        config: {
+                            endpoints: {
+                                byFile: `http://localhost:5000/uploadEditor/`, // Replace with your backend URL for image upload
+                            },
+                            additionalRequestHeaders: {
+                                // Add any necessary headers for authentication or other purposes
+                                // For example:
+                                Authorization: "Bearer your-token",
+                            },
+                            onFileUploadResponse: (response) => {
+                                if (response.success) {
+                                    const imageUrl = response.file.url;
+                                    const block = editor.blocks.insert("image", {
+                                        url: imageUrl,
+                                    });
+                                    editor.caret.setToBlock(block);
+                                } else {
+                                    console.error("Image upload failed:", response.message);
+                                }
+                            },
+                        },
+                    },
+                },
+                data: DEFAULT_INITIAL_DATA,
+            });
+        });
+
+        function submitForm(event) {
+            event.preventDefault();
+
+            editor
+                .save()
+                .then((outputData) => {
+                    const editorContent = document.getElementById("editorContent");
+                    editorContent.value = JSON.stringify(outputData);
+
+                    // Submit the form
+                    event.target.submit();
+                })
+                .catch((error) => {
+                    console.error("Error saving editor content:", error);
+                });
+        }
+////////////////////////////////////////////////////////
+
+    </script>
 </body>
 
 </html>
