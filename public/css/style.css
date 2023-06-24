@@ -1,5 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap");
+
 /* Mobile View */
 @media only screen and (max-width: 767px) {
+  .tab-view-only {
+    display: none !important;
+  }
+  .desktop-view-only {
+    display: none !important;
+  }
   .custom-container {
     color: #181818;
     margin: 3rem auto !important;
@@ -10,10 +18,22 @@
 
 /* Tablet View */
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .mobile-view-only {
+    display: none !important;
+  }
+  .desktop-view-only {
+    display: none !important;
+  }
 }
 
 /* Desktop View */
 @media only screen and (min-width: 1024px) {
+  .mobile-view-only {
+    display: none !important;
+  }
+  .tab-view-only {
+    display: none !important;
+  }
   .custom-container {
     color: #181818;
     margin: 3rem auto !important;
@@ -72,7 +92,7 @@
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: 33, 37, 41;
   --bs-body-bg-rgb: 255, 255, 255;
-  --bs-font-sans-serif: "Work Sans", sans-serif;
+  --bs-font-sans-serif: "Josefin Sans", sans-serif;
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(

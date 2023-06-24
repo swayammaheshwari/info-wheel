@@ -1,32 +1,102 @@
 <%- include("Components/Header") %>
 
     <style>
-        .img-wrapper {
-            width: 400px;
-            /* Adjust this value as per your requirements */
-            height: 300px;
-            /* Adjust this value as per your requirements */
-            overflow: hidden;
+        /* Mobile View */
+        @media only screen and (max-width: 767px) {
+            .custom-container {
+                color: #181818;
+                margin: 3rem auto !important;
+                width: 100% !important;
+                text-align: justify !important;
+            }
+
+            .head-logo-div {
+                justify-content: center;
+                height: 140px;
+                margin-bottom: 15px;
+            }
+
+            .img-wrapper {
+                width: 350px;
+                height: 250px;
+                overflow: hidden;
+            }
+
+            .img-wrapper img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .img-wrapper-l {
+                width: 350px;
+                height: 250px;
+                overflow: hidden;
+            }
+
+            .img-wrapper-l img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
         }
 
-        .img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        /* Tablet View */
+        @media only screen and (min-width: 768px) and (max-width: 1023px) {}
+
+        /* Desktop View */
+        @media only screen and (min-width: 1024px) {
+            .nav-hr-items {
+                display: flex;
+                align-items: end;
+                margin: 0 0 4px 15px;
+            }
+
+            .nav-hr-items h6 {
+                margin-inline: 20px;
+                font-weight: 600;
+            }
+
+            .head-logo-div img {
+                height: 140px;
+                margin-bottom: 15px;
+                padding-left: 0px;
+            }
+
+            .img-wrapper {
+                width: 400px;
+                height: 300px;
+                overflow: hidden;
+            }
+
+            .img-wrapper img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .img-wrapper-l {
+                width: 300px;
+                height: 200px;
+                overflow: hidden;
+            }
+
+            .img-wrapper-l img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
         }
     </style>
     <!-- Start retroy layout blog posts -->
     <section class="section bg-light" style="padding-top: 1rem;">
-        <div class="container d-flex">
-            <img src="/images/info-wheel-logo2.png" alt="" height="140px"
-                style="margin-bottom: 15px; padding-left: 0px;">
-
-
-            <div style="display: flex; align-items: end; margin: 0 0 4px 15px;">
-                <h6 style="margin-inline: 20px; font-weight: 600; "><a href="/#technology">Technology</a></h6>
-                <h6 style="margin-inline: 20px; font-weight: 600; "><a href="/#lifestyle">Lifestyle</a></h6>
-                <h6 style="margin-inline: 20px; font-weight: 600; "><a href="/#food">Food</a></h6>
-                <h6 style="margin-inline: 20px; font-weight: 600; "><a href="/#improvement">Home Improvement</a></h6>
+        <div class="head-logo-div container d-flex">
+            <img src="/images/info-wheel-logo2.png" alt="">
+            <div class="nav-hr-items desktop-view-only">
+                <h6><a href="/#technology">Technology</a></h6>
+                <h6><a href="/#lifestyle">Lifestyle</a></h6>
+                <h6><a href="/#food">Food</a></h6>
+                <h6><a href="/#improvement">Home Improvement</a></h6>
             </div>
 
         </div>
@@ -34,24 +104,34 @@
             <hr style="width: 100%; margin: 0 0 30px 0; height: 4px; color: #1D6FB7; opacity: 1;">
             <div class="row align-items-stretch retro-layout">
                 <div class="col-md-4">
-                    <a href="single.html" class="h-entry mb-30 v-height gradient">
+                    <a href="blog/<%= recentBlogs.Technology[0]._id %>" class="h-entry mb-30 v-height gradient">
 
-                        <div class="featured-img" style="background-image: url('images/img_2_horizontal.jpg');">
+                        <div class="featured-img" id="blog1"
+                            style="background-image: url('images/img_2_horizontal.jpg');">
                         </div>
 
                         <div class="text">
-                            <span class="date">Apr. 14th, 2022</span>
-                            <h2>The Rise of 5G Technology: Unlocking a New Era of Connectivity</h2>
+                            <span class="date">
+                                <%= recentBlogs.Technology[0].date %>
+                            </span>
+                            <h2>
+                                <%= recentBlogs.Technology[0].title %>
+                            </h2>
                         </div>
                     </a>
-                    <a href="single.html" class="h-entry v-height gradient">
+                    <a href="blog/<%= recentBlogs.Lifestyle[0]._id %>" class="h-entry v-height gradient">
 
-                        <div class="featured-img" style="background-image: url('images/img_2_horizontal.jpg');">
+                        <div id="blog2" class="featured-img"
+                            style="background-image: url('images/img_2_horizontal.jpg');">
                         </div>
 
                         <div class="text">
-                            <span class="date">Apr. 14th, 2022</span>
-                            <h2>Don’t assume your user data in the cloud is safe</h2>
+                            <span class="date">
+                                <%= recentBlogs.Lifestyle[0].date %>
+                            </span>
+                            <h2>
+                                <%= recentBlogs.Lifestyle[0].title %>
+                            </h2>
                         </div>
                     </a>
                 </div>
@@ -67,24 +147,34 @@
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <a href="single.html" class="h-entry mb-30 v-height gradient">
+                    <a href="blog/<%= recentBlogs.Food[0]._id %>" class="h-entry mb-30 v-height gradient">
 
-                        <div class="featured-img" style="background-image: url('images/img_2_horizontal.jpg');">
+                        <div id="blog3" class="featured-img"
+                            style="background-image: url('images/img_2_horizontal.jpg');">
                         </div>
 
                         <div class="text">
-                            <span class="date">Apr. 14th, 2022</span>
-                            <h2>The Rise of 5G Technology: Unlocking a New Era of Connectivity</h2>
+                            <span class="date">
+                                <%= recentBlogs.Food[0].date %>
+                            </span>
+                            <h2>
+                                <%= recentBlogs.Food[0].title %>
+                            </h2>
                         </div>
                     </a>
-                    <a href="single.html" class="h-entry v-height gradient">
+                    <a href="blog/<%= recentBlogs.Food[0]._id %>" class="h-entry v-height gradient">
 
-                        <div class="featured-img" style="background-image: url('images/img_2_horizontal.jpg');">
+                        <div id="blog4" class="featured-img"
+                            style="background-image: url('images/img_2_horizontal.jpg');">
                         </div>
 
                         <div class="text">
-                            <span class="date">Apr. 14th, 2022</span>
-                            <h2>The Rise of 5G Technology: Unlocking a New Era of Connectivity</h2>
+                            <span class="date">
+                                <% recentBlogs["Home Improvement"][0].date %>
+                            </span>
+                            <h2>
+                                <%= recentBlogs["Home Improvement"][0].title %>
+                            </h2>
                         </div>
                     </a>
                 </div>
@@ -101,7 +191,8 @@
                     <h2 class="posts-entry-title">technology</h2>
 
                 </div>
-                <div class="col-sm-3 text-sm-end"><a href="/category/Technology" class="read-more">View All</a></div>
+                <div class="col-sm-3 text-sm-end"><a href="/category/Technology" class="read-more">View All</a>
+                </div>
             </div>
             <div class="row g-3">
                 <p style="font-size: large; color: black;">Embrace the future with our tech-focused blog, where we
@@ -148,7 +239,7 @@
                 <div class="col-sm-6">
                     <h2 class="posts-entry-title">Lifestyle</h2>
                 </div>
-                <div class="col-sm-6 text-sm-end"><a href="/category/lifestyle" class="read-more">View All</a></div>
+                <div class="col-sm-6 text-sm-end"><a href="/category/Lifestyle" class="read-more">View All</a></div>
             </div>
             <div class="row">
                 <p style="font-size: large; color: black;">Embrace the future with our tech-focused blog, where we
@@ -158,7 +249,7 @@
                     <div class="col-md-6 col-lg-3">
                         <div class="blog-entry">
                             <a href="/blog/<%= blog._id %>" class="img-link">
-                                <div class="img-wrapper">
+                                <div class="img-wrapper-l">
                                     <img src="<%= blog.titleImage %>" alt="Image" class="img-fluid custom-img">
                                 </div>
                             </a>
@@ -188,7 +279,7 @@
                 <div class="col-sm-6">
                     <h2 class="posts-entry-title">Food</h2>
                 </div>
-                <div class="col-sm-6 text-sm-end"><a href="/category/food" class="read-more">View All</a></div>
+                <div class="col-sm-6 text-sm-end"><a href="/category/Food" class="read-more">View All</a></div>
             </div>
 
             <div class="row">
@@ -236,17 +327,20 @@
                 <div class="col-sm-6">
                     <h2 class="posts-entry-title">Home Improvement</h2>
                 </div>
-                <div class="col-sm-6 text-sm-end"><a href="/category/improvement" class="read-more">View All</a></div>
+                <div class="col-sm-6 text-sm-end"><a href="/category/Home Improvement" class="read-more">View
+                        All</a>
+                </div>
             </div>
             <div class="row">
                 <p style="font-size: large; color: black;">Transform your living space into a haven of beauty and
-                    functionality with our home improvement blog, where we share expert advice, creative ideas, and DIY
+                    functionality with our home improvement blog, where we share expert advice, creative ideas, and
+                    DIY
                     projects to bring out the best in your abode.</p>
                 <% blogs["Home Improvement"].forEach(blog=> { %>
                     <div class="col-md-6 col-lg-3">
                         <div class="blog-entry">
                             <a href="/blog/<%= blog._id %>" class="img-link">
-                                <div class="img-wrapper">
+                                <div class="img-wrapper-l">
                                     <img src="<%= blog.titleImage %>" alt="Image" class="img-fluid custom-img">
                                 </div>
                             </a>
@@ -266,5 +360,19 @@
             </div>
         </div>
     </section>
+
+    <script>
+        // Get the blog title image URL from the server-side data
+        const blog1 = '<%= recentBlogs.Technology[0].titleImage.replace(/\\/g, "/") %>';
+        const blog2 = '<%= recentBlogs.Lifestyle[0].titleImage.replace(/\\/g, "/") %>';
+        const blog3 = '<%= recentBlogs.Food[0].titleImage.replace(/\\/g, "/") %>';
+        const blog4 = '<%= recentBlogs["Home Improvement"][0].titleImage.replace(/\\/g, "/") %>';
+
+        // Set the background image dynamically using JavaScript
+        document.getElementById('blog1').style.backgroundImage = `url('${blog1}')`;
+        document.getElementById('blog2').style.backgroundImage = `url('${blog2}')`;
+        document.getElementById('blog3').style.backgroundImage = `url('${blog3}')`;
+        document.getElementById('blog4').style.backgroundImage = `url('${blog4}')`;
+    </script>
 
     <%- include("Components/Footer") %>

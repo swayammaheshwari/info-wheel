@@ -48,14 +48,18 @@
                     <div class="row g-0 align-items-center">
 
                         <div class="col-8">
-                            <form action="#" class="search-form d-inline-block d-lg-none">
-                                <input type="text" width="20px" class="form-control" placeholder="Search..."
-                                    style="width: 20px;">
+                            <form action="/search" method="GET" class="search-form d-inline-block d-lg-none">
+                                <input type="text" class="form-control" name="q" placeholder="Search..."
+                                    style="width: 200px;">
                                 <span class="bi-search"></span>
                             </form>
 
                             <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
                                 <li class="active"><a href="/">Home</a></li>
+                                <li class="mobile-view-only"><a href="/#technology">Technolgy</a></li>
+                                <li class="mobile-view-only"><a href="/#lifestyle">Lifestyle</a></li>
+                                <li class="mobile-view-only"><a href="/#food">Food</a></li>
+                                <li class="mobile-view-only"><a href="/#improvement">Home Improvement</a></li>
                                 <li><a href="/about">About Us</a></li>
                                 <li><a href="/writeus">Write For Us</a></li>
                                 <li><a href="/contact">Contact Us</a></li>
@@ -63,22 +67,19 @@
                                 <!-- <li class="has-children">
                                     <a href="#">Category</a>
                                     <ul class="dropdown">
-                                        <li><a href="/#technology">Technolgy</a></li>
-                                        <li><a href="/#lifestyle">Lifestyle</a></li>
-                                        <li><a href="/#food">Food</a></li>
-                                        <li><a href="/#improvement">Home Improvement</a></li>
+                                        
                                     </ul>
                                 </li> -->
                                 <li><a class="btn" href="/login"><i class="icon-user"></i> User</a></li>
                             </ul>
                         </div>
-                        <div class="col-2 ">
+                        <div class="col-4 text-end">
                             <a href="#"
                                 class="burger ms-auto float-end site-menu-toggle js-menu-toggle d-inline-block d-lg-none light">
                                 <span></span>
                             </a>
-                            <form action="#" class="search-form d-none d-lg-inline-block">
-                                <input type="text" class="form-control" placeholder="Search...">
+                            <form action="/search" method="GET" class="search-form d-none d-lg-inline-block">
+                                <input type="text" class="form-control" name="q" placeholder="Search..." />
                                 <span class="bi-search"></span>
                             </form>
                         </div>

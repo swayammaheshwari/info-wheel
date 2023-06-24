@@ -42,6 +42,7 @@ app.get("/", (req, res) => {
     if (err) {
       throw err;
     } else {
+      blogs = blogs.reverse();
       blogs.forEach((blog) => {
         let t = JSON.parse(blog.body);
         t = t.blocks[0].data.text;
@@ -54,8 +55,8 @@ app.get("/", (req, res) => {
         "Home Improvement": [],
       };
 
-      // Sort blogs by date in descending order
-      blogs.sort((a, b) => new Date(b.date) - new Date(a.date));
+      // // Sort blogs by date in descending order
+      // blogs.sort((a, b) => new Date(b.date) - new Date(a.date));
 
       for (const blog of blogs) {
         const category = blog.category;
@@ -64,7 +65,20 @@ app.get("/", (req, res) => {
         }
       }
 
-      res.render("index", { blogs: renderedBlogs });
+      const recentBlogs = {
+        Technology: [],
+        Lifestyle: [],
+        Food: [],
+        "Home Improvement": [],
+      };
+
+      for (const category in renderedBlogs) {
+        if (renderedBlogs[category].length > 0) {
+          recentBlogs[category].push(renderedBlogs[category][0]);
+        }
+      }
+      // console.log(recentBlogs);
+      res.render("index", { blogs: renderedBlogs, recentBlogs });
     }
   });
 });
@@ -90,23 +104,24 @@ app.get("/update/:id", (req, res) => {
     if (err) {
       throw err;
     } else {
-      res.render("Form", { blog });
+      res.render("updateForm", { blog });
     }
   });
 });
 
-app.post("/updatepost", (req, res) => {
+app.post("/updatepost", upload.single("title-image"), (req, res) => {
   const id = req.body.id;
-
+  console.log(id);
+  console.log(req.body);
   Blog.findOneAndUpdate(
     { _id: id },
-    { $set: req.body }, // Assuming the updated data is sent in the request body
+    { $set: req.body },
     { new: true },
     (err, blog) => {
       if (err) {
         throw err;
       } else {
-        res.send({ blog });
+        res.render("succes", { msg: "blog update successfully" });
       }
     }
   );
@@ -122,21 +137,6 @@ app.get("/blog/:id", (req, res) => {
     if (err) {
       throw err;
     } else {
-      // const t = JSON.parse(blog.body);
-      // blog.body = t;
-      // console.log(t.blocks[0].data.text);
-      // console.log(blog.body.blockst);
-
-      console.log("before ", typeof blog.body);
-      try {
-        blog.body = JSON.parse(blog.body);
-        console.log("Parsing successful");
-      } catch (error) {
-        console.log("Parsing error:", error);
-      }
-      // blog.body = JSON.parse(blog.body);
-      console.log("after ", typeof blog.body);
-
       blog.body = jsonToHtml(blog.body);
       res.render("Blog", { blog });
     }
@@ -144,7 +144,7 @@ app.get("/blog/:id", (req, res) => {
 });
 
 app.get("/category/:category", (req, res) => {
-  let category = req.params.category;
+  const category = req.params.category;
 
   Blog.find({ category: category }, (err, blogs) => {
     if (err) {
@@ -155,7 +155,11 @@ app.get("/category/:category", (req, res) => {
         t = t.blocks[0].data.text;
         blog.body = t;
       });
-      res.render("Category", { category: category, blogs: blogs });
+      res.render("search&categary", {
+        taskData: category,
+        blogs,
+        task: "Category",
+      });
     }
   });
 });
@@ -178,16 +182,53 @@ app.get("/contact", (req, res) => {
   res.render("Contact");
 });
 
+app.get("/search", (req, res) => {
+  const searchQuery = req.query.q;
+
+  const regexQuery = new RegExp(searchQuery, "i");
+
+  Blog.find({}, (err, blogs) => {
+    if (err) {
+      throw err;
+    } else {
+      const foundBlogs = blogs.filter((blog) => {
+        const parsedBody = JSON.parse(blog.body);
+        const blocks = parsedBody.blocks;
+
+        for (const block of blocks) {
+          const text = block.data.text;
+          if (regexQuery.test(text)) {
+            return true;
+          }
+        }
+        return false;
+      });
+      foundBlogs.forEach((blog) => {
+        let t = JSON.parse(blog.body);
+        t = t.blocks[0].data.text;
+        blog.body = t;
+      });
+      res.render("search&categary", {
+        blogs: foundBlogs,
+        taskData: searchQuery,
+        task: "Search For",
+      });
+    }
+  });
+});
+
 app.get("/dashboard", (req, res) => {
-  res.render("Dashboard");
+  Blog.countDocuments({}, (err, count) => {
+    if (err) {
+      throw err;
+    } else {
+      res.render("Dashboard", { count });
+    }
+  });
 });
 
 app.post("/uploadEditor", upload.single("image"), (req, res) => {
-  if (!req.file) {
-    console.log("error");
-    res.status(400).send("No file uploaded");
-    return;
-  }
+  if (!req.file) res.status(400).send("No file uploaded");
 
   const imagePath = req.file.path;
   const relativeImagePath = imagePath.replace("public", "");
@@ -196,6 +237,7 @@ app.post("/uploadEditor", upload.single("image"), (req, res) => {
     success: 1,
     file: {
       url: `http://localhost:5000/${relativeImagePath}`,
+      width: "10px",
       // ... and any additional fields you want to store, such as width, height, color, extension, etc
     },
   });
@@ -220,7 +262,19 @@ app.post("/post", upload.single("title-image"), (req, res) => {
 
   blog.save();
 
-  res.send("Donee");
+  res.render("succes", { msg: "blog saved successfully" });
+});
+
+app.get("/delete/:id", (req, res) => {
+  const blogId = req.params.id; // Get the blog ID from the request parameters
+
+  Blog.findByIdAndRemove(blogId, (err, deletedBlog) => {
+    if (err) {
+      throw err;
+    } else {
+      res.render("succes", { msg: "Blog deleted successfully" });
+    }
+  });
 });
 
 app.listen(process.env.PORT, function () {
