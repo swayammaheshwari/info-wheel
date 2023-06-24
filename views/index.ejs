@@ -104,7 +104,7 @@
             <hr style="width: 100%; margin: 0 0 30px 0; height: 4px; color: #1D6FB7; opacity: 1;">
             <div class="row align-items-stretch retro-layout">
                 <div class="col-md-4">
-                    <a href="blog/<%= recentBlogs.Technology[0]._id %>" class="h-entry mb-30 v-height gradient">
+                    <a href="blog/<%= recentBlogs?.Technology[0]?._id %>" class="h-entry mb-30 v-height gradient">
 
                         <div class="featured-img" id="blog1"
                             style="background-image: url('images/img_2_horizontal.jpg');">
@@ -112,14 +112,14 @@
 
                         <div class="text">
                             <span class="date">
-                                <%= recentBlogs.Technology[0].date %>
+                                <%= recentBlogs?.Technology[0]?.date %>
                             </span>
                             <h2>
-                                <%= recentBlogs.Technology[0].title %>
+                                <%= recentBlogs?.Technology[0]?.title %>
                             </h2>
                         </div>
                     </a>
-                    <a href="blog/<%= recentBlogs.Lifestyle[0]._id %>" class="h-entry v-height gradient">
+                    <a href="blog/<%= recentBlogs?.Lifestyle[0]?._id %>" class="h-entry v-height gradient">
 
                         <div id="blog2" class="featured-img"
                             style="background-image: url('images/img_2_horizontal.jpg');">
@@ -127,10 +127,10 @@
 
                         <div class="text">
                             <span class="date">
-                                <%= recentBlogs.Lifestyle[0].date %>
+                                <%= recentBlogs.Lifestyle[0]?.date %>
                             </span>
                             <h2>
-                                <%= recentBlogs.Lifestyle[0].title %>
+                                <%= recentBlogs.Lifestyle[0]?.title %>
                             </h2>
                         </div>
                     </a>
@@ -147,7 +147,7 @@
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <a href="blog/<%= recentBlogs.Food[0]._id %>" class="h-entry mb-30 v-height gradient">
+                    <a href="blog/<%= recentBlogs.Food[0]?._id %>" class="h-entry mb-30 v-height gradient">
 
                         <div id="blog3" class="featured-img"
                             style="background-image: url('images/img_2_horizontal.jpg');">
@@ -155,14 +155,14 @@
 
                         <div class="text">
                             <span class="date">
-                                <%= recentBlogs.Food[0].date %>
+                                <%= recentBlogs.Food[0]?.date %>
                             </span>
                             <h2>
-                                <%= recentBlogs.Food[0].title %>
+                                <%= recentBlogs.Food[0]?.title %>
                             </h2>
                         </div>
                     </a>
-                    <a href="blog/<%= recentBlogs.Food[0]._id %>" class="h-entry v-height gradient">
+                    <a href="blog/<%= recentBlogs.Food[0]?._id %>" class="h-entry v-height gradient">
 
                         <div id="blog4" class="featured-img"
                             style="background-image: url('images/img_2_horizontal.jpg');">
@@ -170,10 +170,10 @@
 
                         <div class="text">
                             <span class="date">
-                                <% recentBlogs["Home Improvement"][0].date %>
+                                <% recentBlogs["Home Improvement"][0]?.date %>
                             </span>
                             <h2>
-                                <%= recentBlogs["Home Improvement"][0].title %>
+                                <%= recentBlogs["Home Improvement"][0]?.title %>
                             </h2>
                         </div>
                     </a>
@@ -363,10 +363,10 @@
 
     <script>
         // Get the blog title image URL from the server-side data
-        const blog1 = '<%= recentBlogs.Technology[0].titleImage.replace(/\\/g, "/") %>';
-        const blog2 = '<%= recentBlogs.Lifestyle[0].titleImage.replace(/\\/g, "/") %>';
-        const blog3 = '<%= recentBlogs.Food[0].titleImage.replace(/\\/g, "/") %>';
-        const blog4 = '<%= recentBlogs["Home Improvement"][0].titleImage.replace(/\\/g, "/") %>';
+        const blog1 = '<%= recentBlogs.Technology[0]?.titleImage.replace(/\\/g, "/") %>';
+        const blog2 = '<%= recentBlogs.Lifestyle[0]?.titleImage.replace(/\\/g, "/") %>';
+        const blog3 = '<%= recentBlogs.Food[0]?.titleImage.replace(/\\/g, "/") %>';
+        const blog4 = '<%= recentBlogs["Home Improvement"][0]?.titleImage.replace(/\\/g, "/") %>';
 
         // Set the background image dynamically using JavaScript
         document.getElementById('blog1').style.backgroundImage = `url('${blog1}')`;
